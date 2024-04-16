@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2j3o205jbe0c"]
+
+[ext_resource type="Texture2D" uid="uid://43aiy2don148" path="res://ball.png" id="1_f51up"]
+[ext_resource type="Script" path="res://ball.gd" id="1_swskg"]
+[ext_resource type="AudioStream" uid="uid://d1n6q2eo2toq4" path="res://tecla.mp3" id="3_mdalb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uoi3q"]
+radius = 56.0089
+
+[node name="ball" type="CharacterBody2D"]
+position = Vector2(8, 5)
+script = ExtResource("1_swskg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(45, 53)
+shape = SubResource("CircleShape2D_uoi3q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(45, 59)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_f51up")
+
+[node name="TeclaSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_mdalb")

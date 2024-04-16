@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://cfgdxccp32bvw"]
+
+[ext_resource type="PackedScene" uid="uid://lkpwk2hj3ve4" path="res://player.tscn" id="1_qxky8"]
+[ext_resource type="Script" path="res://level.gd" id="1_s1lvy"]
+[ext_resource type="PackedScene" uid="uid://c2j3o205jbe0c" path="res://ball.tscn" id="2_vvbyr"]
+[ext_resource type="Script" path="res://oponente.gd" id="3_bgxof"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7f0od"]
+size = Vector2(1920, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lqlh"]
+size = Vector2(50, 1080)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_s1lvy")
+
+[node name="Pared superior" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pared superior"]
+position = Vector2(960, -25)
+shape = SubResource("RectangleShape2D_7f0od")
+
+[node name="Pared Inferior" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pared Inferior"]
+position = Vector2(960, 1105)
+shape = SubResource("RectangleShape2D_7f0od")
+
+[node name="Arco Player" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arco Player"]
+position = Vector2(-25, 540)
+shape = SubResource("RectangleShape2D_5lqlh")
+
+[node name="Arco Oponente" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arco Oponente"]
+position = Vector2(1945, 540)
+shape = SubResource("RectangleShape2D_5lqlh")
+
+[node name="Player" parent="." instance=ExtResource("1_qxky8")]
+position = Vector2(50, 450)
+
+[node name="Ball" parent="." instance=ExtResource("2_vvbyr")]
+position = Vector2(817, 473)
+
+[node name="Oponente" parent="." instance=ExtResource("1_qxky8")]
+position = Vector2(1850, 450)
+script = ExtResource("3_bgxof")
+
+[node name="MarcadorPlayer" type="Label" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_colors/font_color = Color(0.847059, 0.415686, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "0 - 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Arco Player" to="." method="_on_arco_player_body_entered"]
+[connection signal="body_entered" from="Arco Oponente" to="." method="_on_arco_oponente_body_entered"]
+[connection signal="timeout" from="RestartTimer" to="Ball" method="_on_restart_timer_timeout"]
